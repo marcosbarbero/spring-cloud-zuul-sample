@@ -41,12 +41,13 @@ public class AuthFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return getAuthenticatedUser() != null;
+        return true;
     }
 
     @Override
     public Object run() {
-        LOGGER.info("client: {}, accessing service: {}", getAuthenticatedUser().getName(), requestedContext());
+        final String username = getAuthenticatedUser() != null ? getAuthenticatedUser().getName() : null;
+        LOGGER.info("client: {}, accessing service: {}", username, requestedContext());
         return null;
     }
 
